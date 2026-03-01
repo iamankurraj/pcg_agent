@@ -2,7 +2,7 @@
 
 A sophisticated asset discovery system that combines local asset searching with intelligent web search, powered by LangGraph and OpenAI. Designed to find Unreal Engine assets based on natural language queries.
 
-## 📋 Overview
+## Overview
 
 This system uses a multi-agent workflow to:
 1. **Analyze intent** from user queries (extract cleaned query, keywords, asset type)
@@ -11,7 +11,7 @@ This system uses a multi-agent workflow to:
 4. **Execute searches** across local filesystem and web
 5. **Rank results** using LLM-powered relevance scoring
 
-## 🏗️ Architecture
+## Architecture
 
 ### Agents (`agents/`)
 - **`decision_agent.py`** - Parses user messages into structured search parameters
@@ -32,7 +32,7 @@ This system uses a multi-agent workflow to:
 ### Application (`app/`)
 - **`main.py`** - FastAPI server exposing `/search` endpoint
 
-## ⚙️ Setup
+## Setup
 
 ### Prerequisites
 - Python 3.8+
@@ -59,7 +59,7 @@ SERP_API_KEY=your_serp_api_key
 ASSET_ROOT = r"C:\path\to\your\unreal\assets"
 ```
 
-## 🚀 Usage
+## Usage
 
 ### API Endpoint
 
@@ -97,7 +97,7 @@ Run tests:
 python test_search.py
 ```
 
-## 🔄 Workflow Flow
+## Workflow Flow
 
 ```
 intent (analyze_request)
@@ -119,7 +119,7 @@ ranking (rank_results)
 END
 ```
 
-## ⚡ Configuration
+## Configuration
 
 ### Asset Detection (`config.py`)
 - **`ASSET_ROOT`** - Path to your Unreal Engine assets directory
@@ -132,16 +132,16 @@ END
 - **`MESH_ONLY`** - Set to `True` to only return static meshes
 - Keyword filtering removes common weak terms
 
-## ✨ Key Features
+## Key Features
 
-✅ **Multi-source search** - Combines local assets with web results  
-✅ **Smart filtering** - License preference-aware results  
-✅ **LLM ranking** - Relevance scoring llm 
-✅ **Domain restriction** - Web search constrained to trusted sources  
-✅ **Asset type detection** - Automatically categorizes StaticMesh, Material, Texture  
-✅ **Unreal path conversion** - Generates valid Unreal Engine import paths  
+**Multi-source search** - Combines local assets with web results  
+**Smart filtering** - License preference-aware results  
+**LLM ranking** - Relevance scoring llm 
+**Domain restriction** - Web search constrained to trusted sources  
+**Asset type detection** - Automatically categorizes StaticMesh, Material, Texture  
+**Unreal path conversion** - Generates valid Unreal Engine import paths  
 
-## 📦 Dependencies
+## Dependencies
 
 See `requirements.txt` for complete list:
 - `fastapi` - Web framework
@@ -150,7 +150,7 @@ See `requirements.txt` for complete list:
 - `tavily-python` - Web search API
 - `openai` - LLM integration
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - [ ] Semantic search using embeddings
 - [ ] Asset caching/indexing with vector DB
