@@ -15,3 +15,4 @@ class AgentState(TypedDict, total=False):
     best_source: str
     decision_reason: str
     final_results: List[Dict[str, Any]]
+

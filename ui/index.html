@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PCG Asset Agent</title>
+
+<style>
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#0f1117;
+color:white;
+margin:0;
+padding:40px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+h1{
+text-align:center;
+margin-bottom:30px;
+}
+
+.searchbox{
+display:flex;
+gap:10px;
+}
+
+input{
+flex:1;
+padding:14px;
+font-size:16px;
+border:none;
+border-radius:6px;
+}
+
+button{
+padding:14px 20px;
+font-size:16px;
+border:none;
+background:#3b82f6;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#2563eb;
+}
+
+.results{
+margin-top:30px;
+}
+
+.card{
+background:#1c1f26;
+padding:18px;
+border-radius:8px;
+margin-bottom:12px;
+}
+
+.card a{
+color:#60a5fa;
+text-decoration:none;
+}
+
+.card small{
+color:#aaa;
+}
+
+.analysis{
+margin-top:20px;
+font-size:14px;
+color:#bbb;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>PCG Asset Agent</h1>
+
+<div class="searchbox">
+
+<input id="query" placeholder="Find pine trees, megaplants pack, rocks..." />
+
+<button onclick="search()">Search</button>
+
+</div>
+
+<div class="analysis" id="analysis"></div>
+
+<div class="results" id="results"></div>
+
+</div>
+
+<script>
+
+async function search(){
+
+const query = document.getElementById("query").value
+
+if(!query) return
+
+document.getElementById("results").innerHTML = "Searching..."
+
+const res = await fetch("http://127.0.0.1:8000/search",{
+
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({message:query})
+
+})
+
+const data = await res.json()
+
+renderAnalysis(data.analysis)
+
+renderResults(data.final_results)
+
+}
+
+function renderAnalysis(a){
+
+document.getElementById("analysis").innerHTML =
+
+`
+Query: ${a.cleaned_query || ""} |
+Type: ${a.asset_type || "any"} |
+License: ${a.license_preference}
+`
+
+}
+
+function renderResults(results){
+
+const container = document.getElementById("results")
+
+container.innerHTML = ""
+
+if(!results || results.length===0){
+
+container.innerHTML = "No results found"
+return
+}
+
+results.forEach(r=>{
+
+const card=document.createElement("div")
+card.className="card"
+
+const description = r.content_snippet || "No description available"
+
+if(r.url){
+
+card.innerHTML =
+
+`
+<b>${r.title || r.name}</b><br>
+<small>${description}</small><br><br>
+<a href="${r.url}" target="_blank">Open Asset</a>
+`
+
+}else{
+
+card.innerHTML =
+
+`
+<b>${r.name}</b><br>
+<small>${r.unreal_path}</small>
+`
+
+}
+
+container.appendChild(card)
+
+})
+
+}
+
+</script>
+
+</body>
+</html>

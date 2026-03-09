@@ -94,3 +94,4 @@ def search_local_assets(keywords):
             })
 
     return matches[:20]   # hard cap
+
